@@ -35,7 +35,7 @@ class ArrayIntegerListTest {
     @DisplayName("Constructor: Инициализация ошибочного количества элементов в конструкторе")
     void constructorZeroInit() {
         assertThrows(ArrayIntegerListOverflowException.class, () -> new ArrayIntegerList(0), "Нулевая длина: провалена");
-        assertThrows(ArrayIntegerListOverflowException.class, () -> new ArrayIntegerList(1001), "Максимальная длина сверх 1000: провалена");
+        assertThrows(ArrayIntegerListOverflowException.class, () -> new ArrayIntegerList(3001), "Максимальная длина сверх 1000: провалена");
     }
 
     @Test
@@ -63,6 +63,15 @@ class ArrayIntegerListTest {
         array.add(0);
         assertTrue(array.get(0) == 1 && array.get(1) == 2 && array.get(2) == 3 && array.get(3) == 0);
         assertEquals(array.size(), 4, "Размер массива 1: провалено");
+    }
+
+    @Test
+    @DisplayName("Метод Add: Проверка добавления 1000 элементов (grow)")
+    void add1000Elements() {
+        for (int i = 0; i < 1000; i++) {
+            array.add(1);
+        }
+        assertEquals(array.size(), 1000, "Размер массива 1000: провалено");
     }
 
     @Test

@@ -11,10 +11,10 @@ public class ArrayIntegerList implements IntegerList {
 
     private Integer[] array;
     private int size;
-    private final int maxSize;
+    private int maxSize;
 
     public ArrayIntegerList(int size) {
-        if (size <= 0 || size > MAX_STRING_LIST_SIZE) {
+        if (size <= 0 || size > MAX_INTEGER_LIST_SIZE) {
             throw new ArrayIntegerListOverflowException();
         }
         this.array = new Integer[size];
@@ -28,6 +28,17 @@ public class ArrayIntegerList implements IntegerList {
         this.array= arrayCopied.toArray();
     }
 
+    private void grow() {
+        if (size() == MAX_INTEGER_LIST_SIZE) {
+            throw new ArrayIntegerListOverflowException();
+        }
+        int newSize = (int) (array.length * 1.5);
+        if (newSize > MAX_INTEGER_LIST_SIZE) newSize = MAX_INTEGER_LIST_SIZE;
+        this.maxSize = newSize;
+        this.array = Arrays.copyOf(array, newSize);
+    }
+
+
     @Override
     public int getMaxSize() {
         return maxSize;
@@ -39,7 +50,39 @@ public class ArrayIntegerList implements IntegerList {
             case BUBBLE -> sortBubble();
             case SELECT -> sortSelection();
             case INSERT -> sortInsertion();
+            case QUICK -> sortQuick(0,size() -1 );
         }
+    }
+
+    public void sortQuick(int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(begin, end);
+
+            sortQuick(begin, partitionIndex - 1);
+            sortQuick(partitionIndex + 1, end);
+        }
+    }
+
+    private int partition(int begin, int end) {
+        int pivot = array[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (array[j] <= pivot) {
+                i++;
+
+                swapElements(i, j);
+            }
+        }
+
+        swapElements(i + 1, end);
+        return i + 1;
+    }
+
+    private void swapElements(int left, int right) {
+        int temp = array[left];
+        array[left] = array[right];
+        array[right] = temp;
     }
 
     private void sortBubble() {
@@ -85,7 +128,7 @@ public class ArrayIntegerList implements IntegerList {
     @Override
     public Integer add(Integer item) {
         if (size >= maxSize) {
-            throw new ArrayIntegerListOverflowException();
+            grow();
         }
         return array[size++] = item;
     }
@@ -93,7 +136,7 @@ public class ArrayIntegerList implements IntegerList {
     @Override
     public Integer add(int index, Integer item) {
         if (index > size || size >= maxSize) {
-            throw new ArrayIntegerListOverflowException();
+            grow();
         }
 
         for (int i = size; i > index; i--) {

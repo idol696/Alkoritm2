@@ -3,18 +3,14 @@ package interfaces;
 public interface IntegerList {
 
     enum SORT {
-        BUBBLE, SELECT, INSERT
-    }
-
-    enum MODE {
-        CLONE, CHANGE
+        BUBBLE, SELECT, INSERT, QUICK
     }
 
     enum DELETE_MODE {
         ID, VALUE
     }
 
-    int MAX_STRING_LIST_SIZE = 1000;
+    int MAX_INTEGER_LIST_SIZE = 3000;
 
     int getMaxSize();
     void sort(IntegerList.SORT sortMode);
