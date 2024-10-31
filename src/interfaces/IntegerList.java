@@ -6,12 +6,17 @@ public interface IntegerList {
         BUBBLE, SELECT, INSERT
     }
 
+    enum MODE {
+        CLONE, CHANGE
+    }
+
     enum DELETE_MODE {
         ID, VALUE
     }
 
     int MAX_STRING_LIST_SIZE = 1000;
 
+    int getMaxSize();
     void sort(IntegerList.SORT sortMode);
     Integer add(Integer item);
     Integer add(int index, Integer item);

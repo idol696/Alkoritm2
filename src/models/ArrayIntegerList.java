@@ -4,11 +4,12 @@ import exceptions.ArrayIntegerListNotFoundException;
 import exceptions.ArrayIntegerListOverflowException;
 import interfaces.IntegerList;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class ArrayIntegerList implements IntegerList {
 
-    private final Integer[] array;
+    private Integer[] array;
     private int size;
     private final int maxSize;
 
@@ -21,9 +22,20 @@ public class ArrayIntegerList implements IntegerList {
         this.maxSize = size;
     }
 
+    public ArrayIntegerList(IntegerList arrayCopied) {
+        this.size = arrayCopied.size();
+        this.maxSize = arrayCopied.getMaxSize();
+        this.array= arrayCopied.toArray();
+    }
+
+    @Override
+    public int getMaxSize() {
+        return maxSize;
+    }
+
     @Override
     public void sort(SORT sortMode) {
-        switch(sortMode) {
+        switch (sortMode) {
             case BUBBLE -> sortBubble();
             case SELECT -> sortSelection();
             case INSERT -> sortInsertion();
