@@ -14,6 +14,16 @@ class ArrayIntegerListTest {
     ArrayIntegerList array = new ArrayIntegerList(10);
 
     @Test
+    @DisplayName("Constructor: Инициализация копией массива")
+    void constructorCopy() {
+        ArrayIntegerList arrayNew = new ArrayIntegerList(1000);
+        for (int i = 0; i < 1000; i++) arrayNew.add(1);
+        ArrayIntegerList arrayCopy = new ArrayIntegerList(arrayNew);
+        assertArrayEquals(arrayCopy.toArray(), arrayNew.toArray());
+    }
+
+
+    @Test
     @DisplayName("Constructor: Инициализация предельного количества элементов в конструкторе (память)")
     void constructorInit() {
         ArrayIntegerList arrayNew = new ArrayIntegerList(1000);

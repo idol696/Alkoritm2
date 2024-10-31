@@ -1,6 +1,7 @@
 import interfaces.IntegerList;
 import models.ArrayIntegerList;
 
+import java.lang.reflect.Array;
 import java.util.Random;
 
 public class AlcoholApp {
@@ -13,6 +14,8 @@ public class AlcoholApp {
             array.add(random.nextInt(300));
         }
 
+        ArrayIntegerList array1 = new ArrayIntegerList(array);
+        ArrayIntegerList array2 = new ArrayIntegerList(array);
 
         System.out.println("Пузырьковая сортировка");
         long start = System.currentTimeMillis();
@@ -21,13 +24,12 @@ public class AlcoholApp {
 
         System.out.println("Сортировка выбором");
         start = System.currentTimeMillis();
-        array.sort(IntegerList.SORT.SELECT);
+        array1.sort(IntegerList.SORT.SELECT);
         System.out.println(System.currentTimeMillis() - start);
 
         System.out.println("Сортировка вставкой");
         start = System.currentTimeMillis();
-        array.sort(IntegerList.SORT.INSERT);
+        array2.sort(IntegerList.SORT.INSERT);
         System.out.println(System.currentTimeMillis() - start);
-
     }
 }
